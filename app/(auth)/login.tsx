@@ -5,7 +5,7 @@ import { styles } from '@/styles/auth.styles'
 export default function login() {
   return (
     <View style={styles.container}>
-      <Text>login</Text>
+      <Text>Login Page</Text>
     </View>
   )
 }
