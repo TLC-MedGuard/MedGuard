@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const MedicationsPage = () => {
@@ -11,7 +11,7 @@ const MedicationsPage = () => {
       interactions: 'No Known Interactions',
       reminder: true,
       color: '#E0F7E9',
-      image: require('../../assets/images/cap1.png'), // Replace with your capsule image
+      image: require('../../assets/images/cap1.png'),
     },
     {
       name: 'ALAXYAN 500mg',
@@ -20,7 +20,7 @@ const MedicationsPage = () => {
       interactions: 'Mild Interactions',
       reminder: false,
       color: '#FFF9E6',
-      image: require('../../assets/images/cap2.png'), // Replace with your capsule image
+      image: require('../../assets/images/cap2.png'),
     },
     {
       name: 'PARACETAKISS 500mg',
@@ -29,7 +29,7 @@ const MedicationsPage = () => {
       interactions: 'Severe Interactions',
       reminder: true,
       color: '#FFE6E6',
-      image: require('../../assets/images/cap3.png'), // Replace with your capsule image
+      image: require('../../assets/images/cap3.png'),
     },
     {
       name: 'DOLFINAKS 500mg',
@@ -38,7 +38,7 @@ const MedicationsPage = () => {
       interactions: 'No Known Interactions',
       reminder: true,
       color: '#E0F7E9',
-      image: require('../../assets/images/cap1.png'), // Replace with your capsule image
+      image: require('../../assets/images/cap1.png'),
     },
   ];
 
@@ -62,22 +62,26 @@ const MedicationsPage = () => {
       </View>
 
       {/* Medications List */}
-      <ScrollView style={styles.listContainer}>
+      <ScrollView style={styles.listContainer} contentContainerStyle={{ paddingBottom: 100 }}>
         {medications.map((med, index) => (
           <View
             key={index}
             style={[
               styles.medicationCard,
-              index === 0 && styles.firstRowCard, // Apply specific styles for the first row
+              index === 0 && styles.firstRowCard,
             ]}
           >
             <View style={styles.medInfo}>
-              <Image source={med.image} style={styles.medImage} />
-              <View>
-                <Text style={[styles.medName, index === 0 && styles.firstRowMedName]}>
+              <Image
+                source={med.image}
+                style={styles.medImage}
+                resizeMode="contain"
+              />
+              <View style={{ flex: 1, minWidth: 0 }}>
+                <Text style={[styles.medName, index === 0 && styles.firstRowMedName]} numberOfLines={1} adjustsFontSizeToFit>
                   {med.name}
                 </Text>
-                <Text style={[styles.medDetails, index === 0 && styles.firstRowMedDetails]}>
+                <Text style={[styles.medDetails, index === 0 && styles.firstRowMedDetails]} numberOfLines={1} adjustsFontSizeToFit>
                   {med.form} | {med.frequency}
                 </Text>
               </View>
@@ -89,13 +93,13 @@ const MedicationsPage = () => {
                 <TouchableOpacity
                   style={[
                     styles.reminderButton,
-                    !med.reminder && styles.noReminderButton, // Apply "No Reminder" style if reminder is false
+                    !med.reminder && styles.noReminderButton,
                   ]}
                 >
                   <Text
                     style={[
                       styles.reminderText,
-                      !med.reminder && styles.noReminderText, // Apply "No Reminder" text style if reminder is false
+                      !med.reminder && styles.noReminderText,
                     ]}
                   >
                     {med.reminder ? 'Reminder Set' : 'No Reminder Set'}
@@ -104,8 +108,8 @@ const MedicationsPage = () => {
                 <Text
                   style={[
                     styles.interactionText,
-                    med.interactions === 'Severe Interactions' && styles.severeInteractionText, // Apply red styling for severe interactions
-                    med.interactions === 'Mild Interactions' && styles.mildInteractionText, // Apply yellow styling for mild interactions
+                    med.interactions === 'Severe Interactions' && styles.severeInteractionText,
+                    med.interactions === 'Mild Interactions' && styles.mildInteractionText,
                   ]}
                 >
                   {med.interactions}
@@ -124,13 +128,12 @@ const MedicationsPage = () => {
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   firstRowCard: {
-    backgroundColor: '#F8F9FA',  // slightly different background for first row
+    backgroundColor: '#F8F9FA',
   },
   firstRowMedName: {
-    fontSize: 20,  // slightly larger font for first row
+    fontSize: 20,
     fontWeight: 'bold',
   },
   firstRowMedDetails: {
@@ -192,30 +195,38 @@ const styles = StyleSheet.create({
   medicationCard: {
     backgroundColor: '#FFF',
     borderRadius: 15,
-    padding: 20,
+    padding: '5%',
     marginBottom: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    width: '100%',
+    maxWidth: 500,
+    alignSelf: 'center',
   },
   medInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    flexWrap: 'wrap',
+    width: '100%',
   },
   medImage: {
     width: 35,
     height: 50,
-    marginRight: 30,
+    marginRight: 16,
     borderRadius: 10,
+    maxWidth: '100%',
   },
   medName: {
     fontSize: 18,
     fontWeight: 'bold',
+    flexShrink: 1,
   },
   medDetails: {
     color: '#757575',
+    flexShrink: 1,
   },
   medFooter: {
     marginTop: 20,
@@ -225,6 +236,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    flexWrap: 'wrap',
     gap: 10,
   },
   reminderButton: {
@@ -251,6 +263,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     fontWeight: 'bold',
     marginLeft: 10,
+    flexShrink: 1,
   },
   mildInteractionText: {
     backgroundColor: '#FFF9C4',
@@ -260,6 +273,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     fontWeight: 'bold',
     marginLeft: 10,
+    flexShrink: 1,
   },
   severeInteractionText: {
     backgroundColor: '#FFE6E6',
@@ -269,6 +283,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     fontWeight: 'bold',
     marginLeft: 10,
+    flexShrink: 1,
   },
   fab: {
     position: 'absolute',
