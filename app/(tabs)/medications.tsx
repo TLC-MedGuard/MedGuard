@@ -11,7 +11,7 @@ const MedicationsPage = () => {
       interactions: 'No Known Interactions',
       reminder: true,
       color: '#E0F7E9',
-      image: require('../../assets/images/cap1.png'), // Replace with your capsule image
+      image: require('../../assets/images/icon.png'), // Replace with your capsule image
     },
     {
       name: 'ALAXYAN 500mg',
@@ -20,7 +20,7 @@ const MedicationsPage = () => {
       interactions: 'Mild Interactions',
       reminder: false,
       color: '#FFF9E6',
-      image: require('../../assets/images/cap2.png'), // Replace with your capsule image
+      image: require('../../assets/images/icon.png'), // Replace with your capsule image
     },
     {
       name: 'PARACETAKISS 500mg',
@@ -29,7 +29,7 @@ const MedicationsPage = () => {
       interactions: 'Severe Interactions',
       reminder: true,
       color: '#FFE6E6',
-      image: require('../../assets/images/cap3.png'), // Replace with your capsule image
+      image: require('../../assets/images/icon.png'), // Replace with your capsule image
     },
     {
       name: 'DOLFINAKS 500mg',
@@ -38,7 +38,7 @@ const MedicationsPage = () => {
       interactions: 'No Known Interactions',
       reminder: true,
       color: '#E0F7E9',
-      image: require('../../assets/images/cap1.png'), // Replace with your capsule image
+      image: require('../../assets/images/icon.png'), // Replace with your capsule image
     },
   ];
 

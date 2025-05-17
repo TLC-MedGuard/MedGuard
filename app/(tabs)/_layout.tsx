@@ -17,11 +17,12 @@ export default function TabLayout() {
                 left: 0,
                 right: 0,
                 elevation: 0,
-                backgroundColor: COLORS.white,
+                backgroundColor: 'white',
                 borderTopWidth: 0,
                 height: 60,
                 paddingTop: 10,
                 paddingBottom: 10,
+
             },
             tabBarItemStyle: {
                 height: '100%', 
@@ -42,7 +43,7 @@ export default function TabLayout() {
                 tabBarIcon: ({size, color }) => <MaterialCommunityIcons name="pill" size={size} color={color} />, 
             }}
         />
-        <Tabs.Screen 
+        <Tabs.Screen
             name="scan"  
             options={{
                 tabBarIcon: ({size, color }) => <MaterialCommunityIcons name="scan-helper" size={size} color={COLORS.blue} />, 

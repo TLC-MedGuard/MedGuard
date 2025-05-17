@@ -171,6 +171,7 @@ export default function Index() {
   const [selectedMedication, setSelectedMedication] = useState(null);
   const [showMedModal, setShowMedModal] = useState(false);
   const scrollY = useRef(new Animated.Value(0)).current;
+const flatListRef = useRef<FlatList<any>>(null);
 
   const initialIndex = useMemo(() => {
     return weeks.findIndex((week) =>
@@ -181,6 +182,19 @@ export default function Index() {
   const onRefresh = () => {
     setRefreshing(true);
     setSelectedDate(today);
+    
+    const weekIndex = weeks.findIndex(week =>
+    week.some(day => 
+  day.getFullYear() === today.getFullYear() &&
+  day.getMonth() === today.getMonth() &&
+  day.getDate() === today.getDate()
+)
+
+  );
+  if (weekIndex !== -1 && flatListRef.current) {
+    flatListRef.current.scrollToIndex({ index: weekIndex, animated: true });
+  }
+
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
@@ -233,7 +247,7 @@ export default function Index() {
               </View>
             </TouchableOpacity>
             <Image
-              source={require('../../assets/images/icon.png')}
+              source={require('../../assets/images/default-user.jpg')}
               style={styles.profile}
             />
           </View>
@@ -254,6 +268,7 @@ export default function Index() {
           { opacity: dateOpacity, transform: [{ translateY: dateTranslateY }] }
         ]}>
           <FlatList
+          ref={flatListRef}
             data={weeks}
             keyExtractor={(_, index) => `week-${index}`}
             horizontal
@@ -453,6 +468,7 @@ export default function Index() {
             refreshing={refreshing} 
             onRefresh={onRefresh}
             tintColor="#4682B4"
+            progressViewOffset={HEADER_MAX_HEIGHT}
           />
         }
         renderItem={renderMedItem}
@@ -527,8 +543,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    borderWidth: 2,
-    borderColor: '#FFF',
   },
   todayText: {
     fontSize: 28,

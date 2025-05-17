@@ -48,9 +48,8 @@ export default function Scan() {
     <View style={styles.container}>
       {/* Camera Preview Area */}
       <View style={styles.cameraContainer}>
-        {/* Simulated camera view - in a real app this would be a camera component */}
         <Image 
-          source={require('../../assets/images/icon.png')} 
+          source={require('../../assets/images/medicine-scan.jpg')} 
           style={styles.cameraPreview}
           resizeMode="cover"
         />
