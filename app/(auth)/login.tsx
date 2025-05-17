@@ -45,7 +45,7 @@ export default function Signin() {
       <Text style={styles.orText}>Or Login with</Text>
       <TouchableOpacity style={styles.googleButton}>
         <Image
-          source={require('../../assets/images/google.png')}
+          source={require('../../assets/images/icon.png')}
           style={styles.googleIcon}
         />
         <Text style={styles.googleButtonText}>Google</Text>

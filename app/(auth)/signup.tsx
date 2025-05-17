@@ -50,7 +50,7 @@ export default function Signup() {
       {/* Or Sign Up with */}
       <Text style={styles.orText}>Or Sign Up with</Text>
       <TouchableOpacity style={styles.googleButton}>
-        <Image source={require('../../assets/images/google.png')} style={styles.googleIcon} />
+        <Image source={require('../../assets/images/icon.png')} style={styles.googleIcon} />
         <Text style={styles.googleButtonText}>Google</Text>
       </TouchableOpacity>
 
