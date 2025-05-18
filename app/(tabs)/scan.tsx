@@ -38,7 +38,7 @@ export default function Scan() {
         name: 'Paracetamol 500mg',
         type: 'Tablet',
         image: require('../../assets/images/paracetamol.png'),
-        match: '98%',
+        match: '97%',
         details: 'Pain reliever and fever reducer'
       });
     }, 3000);
