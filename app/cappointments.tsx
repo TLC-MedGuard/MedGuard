@@ -12,8 +12,6 @@ const CaregiverAppointmentsScreen = () => {
       type: 'upcoming',
       patient: {
         name: 'Maria Santos',
-        age: '72',
-        condition: 'Hypertension, Diabetes',
       },
       doctor: {
         name: 'Dr. Juan Dela Cruz',

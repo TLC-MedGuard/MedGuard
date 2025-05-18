@@ -3,19 +3,20 @@ import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants/theme';
 import { useNavigation } from 'expo-router';
-
 const HealthRecordsScreen = () => {
   const navigation = useNavigation();
-  
-  // Patient Information
-  const patientInfo = {
-    name: "John Doe",
-    username: "johndoe123",
-    email: "johndoe@example.com",
-    address: "123 Main St, Anytown, USA",
-    phoneNumber: "(123) 456-7890",
-    profilePicture: "https://example.com/profile.jpg" // Placeholder URL
-  };
+
+const patientInfo = {
+  name: "John Doe",
+  username: "johndoe123",
+  email: "johndoe@example.com",
+  address: "123 Main St, Anytown, USA",
+  phoneNumber: "(123) 456-7890",
+  profilePicture: require('./assets/images/default-user.jpg')
+
+
+};
+
 
   const healthMetrics = {
     age: 35,
@@ -80,7 +81,7 @@ const HealthRecordsScreen = () => {
 
         {/* Patient Info */}
         <View style={styles.patientInfoContainer}>
-          <Image source={{ uri: patientInfo.profilePicture }} style={styles.profilePicture} />
+          <Image source={patientInfo.profilePicture} style={styles.profilePicture} />
           <Text style={styles.patientName}>{patientInfo.name}</Text>
           <Text style={styles.patientDetail}>Username: {patientInfo.username}</Text>
           <Text style={styles.patientDetail}>Email: {patientInfo.email}</Text>
