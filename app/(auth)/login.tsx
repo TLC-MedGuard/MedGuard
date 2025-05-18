@@ -70,7 +70,7 @@ const handlePasswordReset = () => {
       // Simulate login API call
       setTimeout(() => {
         setIsLoading(false);
-        router.replace('../(tabs)');
+        router.replace('/(auth)/choose');
       }, 1500);
     }
   };
