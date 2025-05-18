@@ -6,13 +6,21 @@ import { useNavigation } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { Linking } from 'react-native';
+
 
 const formatDate = (date) => {
   if (!date) return '';
   const d = new Date(date);
   return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 };
-
+   const handleAttachmentPress = (attachment) => {
+     if (attachment.uri) {
+       Linking.openURL(attachment.uri).catch(err => 
+         console.error('Failed to open attachment:', err)
+       );
+     }
+   };
 const HealthRecordsScreen = () => {
   const navigation = useNavigation();
   const [isEditingMetrics, setIsEditingMetrics] = useState(false);
@@ -538,7 +546,15 @@ const addTestResult = () => {
       {newTest.date || 'Select Date'}
     </Text>
   </TouchableOpacity>
-  
+  {showTestDatePicker && (
+     <DateTimePicker
+       value={newTest.date ? new Date(newTest.date) : new Date()}
+       mode="date"
+       display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+       onChange={onTestDateChange}
+       maximumDate={new Date()} // Prevent future dates
+     />
+   )}
   <TextInput
     style={[styles.modalInput, { height: 80 }]}
     placeholder="Results"
