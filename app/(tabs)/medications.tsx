@@ -61,7 +61,6 @@ const MedicationsPage = () => {
   },
 ]);
 
-  const [showNotifications, setShowNotifications] = useState(false);
   const [kebabMenuVisibleId, setKebabMenuVisibleId] = useState(null);
   const [showMedModal, setShowMedModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
@@ -656,9 +655,6 @@ const handleSave = () => {
             style={styles.logo}
           />
           <View style={styles.headerRight}>
-            <TouchableOpacity onPress={() => setShowNotifications(true)}>
-              <Ionicons name="notifications-outline" size={24} color="#FFF" />
-            </TouchableOpacity>
             <Image
               source={require('../../assets/images/default-user.jpg')}
               style={styles.profile}
@@ -690,27 +686,6 @@ const handleSave = () => {
       <TouchableOpacity style={styles.fab} onPress={handleAdd}>
         <MaterialCommunityIcons name="plus" size={24} color="#FFF" />
       </TouchableOpacity>
-
-      <Modal
-        transparent
-        visible={showNotifications}
-        onRequestClose={() => setShowNotifications(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Notifications</Text>
-              <TouchableOpacity onPress={() => setShowNotifications(false)}>
-                <MaterialCommunityIcons
-                  name="close"
-                  size={24}
-                  color={COLORS.blue}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
 
       {renderMedicationModal()}
       {renderDetailModal()}
@@ -791,7 +766,7 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     flex: 1,
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.blue2,
     borderRadius: 10,
     padding: 16,
     alignItems: 'center',
@@ -869,13 +844,13 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   radioCircleSelected: {
-    borderColor: COLORS.blue,
+    borderColor: COLORS.blue2,
   },
   radioSelected: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.blue2,
   },
   radioLabel: {
     fontSize: 15,
@@ -900,7 +875,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleSwitchActive: {
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.blue2,
   },
   toggleCircle: {
     width: 28,
@@ -936,26 +911,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
   },
-  notificationModalContainer: {
-    backgroundColor: '#FFF',
-    borderRadius: 16,
-    width: '90%',
-    maxHeight: '60%',
-    overflow: 'hidden',
-  },
-  notificationModalHeader: {
-    backgroundColor: COLORS.blue,
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  notificationModalContent: {
-    padding: 20,
-  },
+
   headerContainer: {
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.blue2,
     paddingHorizontal: 16,
     paddingTop: 12,
     paddingBottom: 20,
@@ -1112,7 +1070,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 24,
     bottom: 75,
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.blue2,
     borderRadius: 28,
     width: 56,
     height: 56,
@@ -1158,14 +1116,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     borderWidth: 1,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.blue2,
     borderRadius: 10,
     borderStyle: 'dashed',
     justifyContent: 'center',
   },
   addTimeButtonText: {
     marginLeft: 8,
-    color: COLORS.blue,
+    color: COLORS.blue2,
     fontSize: 16,
   },
   reminderTimesContainer: {
@@ -1277,7 +1235,7 @@ const styles = StyleSheet.create({
   detailInteractingMed: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 8
   },
   detailInteractingMedText: {
     fontSize: 15,

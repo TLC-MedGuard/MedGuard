@@ -38,12 +38,6 @@ const ProfileScreen = () => {
       {/* Menu Options */}
       <View style={styles.menuSection}>
         <MenuItem 
-          title="Your Health Records" 
-          icon="fitness-outline" 
-          color={COLORS.blue2}
-          onPress={() => router.push('/healthrecords')}
-        />
-        <MenuItem 
             title="Appointments" 
             icon="calendar-outline" 
             color={COLORS.blue2}
