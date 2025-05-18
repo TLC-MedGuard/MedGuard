@@ -77,11 +77,11 @@ const ProfileScreen = () => {
       </View>
 
       {/* Footer Links */}
-      <View style={styles.footerLinks}>
+      {/* <View style={styles.footerLinks}>
         <Link href="/privacy" style={styles.footerLink}>Privacy Policy</Link>
         <Text style={styles.footerDivider}>•</Text>
         <Link href="/terms" style={styles.footerLink}>Terms of Service</Link>
-      </View>
+      </View> */}
     </ScrollView>
   );
 };
