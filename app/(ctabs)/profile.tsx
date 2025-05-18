@@ -39,8 +39,15 @@ const CaregiverProfileScreen = () => {
       <View style={styles.menuSection}>
 
         <MenuItem 
-          title="Appointments" 
-          icon="calendar-outline" 
+            title="Appointments" 
+            icon="calendar-outline" 
+            color={COLORS.blue2}
+            onPress={() => router.push('/appointments')}
+          />
+
+        <MenuItem 
+          title="Care Team" 
+          icon="people-outline" 
           color={COLORS.blue2}
           onPress={() => router.push('/cappointments')}
         />
