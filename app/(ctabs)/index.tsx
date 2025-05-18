@@ -65,7 +65,7 @@ const medicationsData: Record<string, {
   }[]> = {
     '2025-05-15': [
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Paracetamol',
         grams: '500mg',
         capsules: '2',
@@ -74,7 +74,7 @@ const medicationsData: Record<string, {
         status: STATUS.TAKEN
       },
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Vitamin C',
         grams: '1000mg',
         capsules: '1',
@@ -85,7 +85,7 @@ const medicationsData: Record<string, {
     ],
     '2025-05-16': [
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Ibuprofen',
         grams: '200mg',
         capsules: '1',
@@ -94,7 +94,7 @@ const medicationsData: Record<string, {
         status: STATUS.MISSED
       },
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Paracetamol',
         grams: '500mg',
         capsules: '2',
@@ -104,13 +104,13 @@ const medicationsData: Record<string, {
         takenTime: '09:30 AM'
       },
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Vitamin C',
         grams: '1000mg',
         capsules: '1',
         daily: 'Daily',
         time: '12:00 PM',
-        status: STATUS.UPCOMING
+        status: STATUS.TAKEN
       },
     ],  
 };

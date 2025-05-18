@@ -52,9 +52,9 @@ const medicationsData: Record<string, {
     daily: string; 
     time: string; 
   }[]> = {
-    '2025-05-15': [
+    '2025-05-19': [
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Paracetamol',
         grams: '500mg',
         capsules: '2',
@@ -62,7 +62,7 @@ const medicationsData: Record<string, {
         time: '08:00 AM',
       },
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Vitamin C',
         grams: '1000mg',
         capsules: '1',
@@ -70,9 +70,9 @@ const medicationsData: Record<string, {
         time: '12:00 PM',
       },
     ],
-    '2025-05-16': [
+    '2025-05-20': [
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Ibuprofen',
         grams: '200mg',
         capsules: '1',
@@ -80,7 +80,7 @@ const medicationsData: Record<string, {
         time: '09:00 AM',
       },
       {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Paracetamol',
         grams: '500mg',
         capsules: '2',
@@ -88,71 +88,7 @@ const medicationsData: Record<string, {
         time: '08:00 AM',
       },
       {
-        image: require('../../assets/images/icon.png'),
-        name: 'Vitamin C',
-        grams: '1000mg',
-        capsules: '1',
-        daily: 'Daily',
-        time: '12:00 PM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Paracetamol',
-        grams: '500mg',
-        capsules: '2',
-        daily: 'Daily',
-        time: '08:00 AM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Vitamin C',
-        grams: '1000mg',
-        capsules: '1',
-        daily: 'Daily',
-        time: '12:00 PM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Paracetamol',
-        grams: '500mg',
-        capsules: '2',
-        daily: 'Daily',
-        time: '08:00 AM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Vitamin C',
-        grams: '1000mg',
-        capsules: '1',
-        daily: 'Daily',
-        time: '12:00 PM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Paracetamol',
-        grams: '500mg',
-        capsules: '2',
-        daily: 'Daily',
-        time: '08:00 AM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Vitamin C',
-        grams: '1000mg',
-        capsules: '1',
-        daily: 'Daily',
-        time: '12:00 PM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Paracetamol',
-        grams: '500mg',
-        capsules: '2',
-        daily: 'Daily',
-        time: '08:00 AM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
+        image: require('../../assets/images/paracetamol.png'),
         name: 'Vitamin C',
         grams: '1000mg',
         capsules: '1',

@@ -31,7 +31,7 @@ const MedicationsPage = () => {
     times: ['08:00 AM'],
     interaction: 'No Known Interactions',
     interactingWith: [],
-    image: require('../../assets/images/icon.png'),
+    image: require('../../assets/images/paracetamol.png'),
   },
   {
     id: 2,
@@ -44,7 +44,7 @@ const MedicationsPage = () => {
     times: ['08:00 AM', '08:00 PM'],
     interaction: 'Mild Interactions',
     interactingWith: ['Aspirin'],
-    image: require('../../assets/images/icon.png'),
+    image: require('../../assets/images/paracetamol.png'),
   },
   {
   id: 3,
@@ -57,7 +57,7 @@ const MedicationsPage = () => {
   times: ['08:00 AM'],
   interaction: 'Mild Interactions',
   interactingWith: ['Vitamin C'],
-  image: require('../../assets/images/icon.png'),
+  image: require('../../assets/images/paracetamol.png'),
   },
 ]);
 
@@ -218,7 +218,7 @@ const handleSave = () => {
       times: formData.reminder ? [...formData.times] : [],
       interaction: formData.interaction,
       interactingWith: formData.interactingWith,
-      image: require('../../assets/images/icon.png'),
+      image: require('../../assets/images/paracetamol.png'),
     };
     setMedications((meds) => [...meds, newMedication]);
   }
@@ -672,7 +672,7 @@ const handleSave = () => {
         ListEmptyComponent={
           <View style={styles.noMedContainer}>
             <Image
-              source={require('../../assets/images/icon.png')}
+              source={require('../../assets/images/paracetamol.png')}
               style={styles.emptyStateImage}
             />
             <Text style={styles.noMedText}>No medications added</Text>
