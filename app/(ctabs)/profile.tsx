@@ -45,13 +45,6 @@ const CaregiverProfileScreen = () => {
             onPress={() => router.push('/appointments')}
           />
 
-        <MenuItem 
-          title="Care Team" 
-          icon="people-outline" 
-          color={COLORS.blue2}
-          onPress={() => router.push('/cappointments')}
-        />
-
         {/* Settings Section */}
         <Text style={styles.sectionHeader}>Settings</Text>
         <MenuItem 
@@ -108,7 +101,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8FAFC',
     paddingHorizontal: 24,
-    marginBottom: 50,
   },
   header: {
     marginTop: 25,
