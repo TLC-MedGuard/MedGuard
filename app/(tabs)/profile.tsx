@@ -24,13 +24,15 @@ const ProfileScreen = () => {
         />
 
         <View style={styles.userInfo}>
-          <Text style={styles.username}>Username</Text>
-          <Text style={styles.email}>email@example.com</Text>
+          <Text style={styles.username}>Juan</Text>
+          <Text style={styles.email}>juan.delacruz@gmail.com</Text>
         </View>
-        <TouchableOpacity style={styles.editButton}>
-          <Ionicons name="pencil-outline" size={18} color={COLORS.blue2} />
-          <Text style={styles.editButtonText}>Edit Profile</Text>
-        </TouchableOpacity>
+        <Link href="/editprofile" asChild>
+  <TouchableOpacity style={styles.editButton}>
+    <Ionicons name="pencil-outline" size={18} color={COLORS.blue2} />
+    <Text style={styles.editButtonText}>Edit Profile</Text>
+  </TouchableOpacity>
+</Link>
       </View>
 
       {/* Menu Options */}
@@ -39,18 +41,20 @@ const ProfileScreen = () => {
           title="Your Health Records" 
           icon="fitness-outline" 
           color={COLORS.blue2}
+          onPress={() => router.push('/healthrecords')}
         />
         <MenuItem 
-            title="Appointment History" 
+            title="Appointments" 
             icon="calendar-outline" 
             color={COLORS.blue2}
             onPress={() => router.push('/appointments')}
           />
 
         <MenuItem 
-          title="Caregivers & Doctors" 
+          title="Care Team" 
           icon="people-outline" 
           color={COLORS.blue2}
+          onPress={() => router.push('/caregivers')}
         />
 
         {/* Settings Section */}
@@ -74,6 +78,7 @@ const ProfileScreen = () => {
           title="Log Out" 
           icon="log-out-outline"
           color="#FF3B30"
+          onPress={() => router.push('/(auth)/login')}
         />
       </View>
 
