@@ -32,6 +32,15 @@ const HEADER_MAX_HEIGHT = 215;
 const HEADER_MIN_HEIGHT = 75;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
+// Status types
+const STATUS = {
+  TAKEN: 'taken',
+  SKIPPED: 'skipped',
+  MISSED: 'missed',
+  LATE: 'late',
+  UPCOMING: 'upcoming', // For medications not yet due
+};
+
 const generateWeek = (startDate: Date) =>
   Array.from({ length: DAYS_IN_WEEK }, (_, i) => addDays(startDate, i));
 
@@ -50,7 +59,9 @@ const medicationsData: Record<string, {
     grams: string; 
     capsules: string; 
     daily: string; 
-    time: string; 
+    time: string;
+    status: string; // Added status field
+    takenTime?: string; // For late medications
   }[]> = {
     '2025-05-15': [
       {
@@ -60,6 +71,7 @@ const medicationsData: Record<string, {
         capsules: '2',
         daily: 'Daily',
         time: '08:00 AM',
+        status: STATUS.TAKEN
       },
       {
         image: require('../../assets/images/icon.png'),
@@ -68,6 +80,7 @@ const medicationsData: Record<string, {
         capsules: '1',
         daily: 'Daily',
         time: '12:00 PM',
+        status: STATUS.SKIPPED
       },
     ],
     '2025-05-16': [
@@ -78,6 +91,7 @@ const medicationsData: Record<string, {
         capsules: '1',
         daily: 'Daily',
         time: '09:00 AM',
+        status: STATUS.MISSED
       },
       {
         image: require('../../assets/images/icon.png'),
@@ -86,6 +100,8 @@ const medicationsData: Record<string, {
         capsules: '2',
         daily: 'Daily',
         time: '08:00 AM',
+        status: STATUS.LATE,
+        takenTime: '09:30 AM'
       },
       {
         image: require('../../assets/images/icon.png'),
@@ -94,70 +110,7 @@ const medicationsData: Record<string, {
         capsules: '1',
         daily: 'Daily',
         time: '12:00 PM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Paracetamol',
-        grams: '500mg',
-        capsules: '2',
-        daily: 'Daily',
-        time: '08:00 AM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Vitamin C',
-        grams: '1000mg',
-        capsules: '1',
-        daily: 'Daily',
-        time: '12:00 PM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Paracetamol',
-        grams: '500mg',
-        capsules: '2',
-        daily: 'Daily',
-        time: '08:00 AM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Vitamin C',
-        grams: '1000mg',
-        capsules: '1',
-        daily: 'Daily',
-        time: '12:00 PM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Paracetamol',
-        grams: '500mg',
-        capsules: '2',
-        daily: 'Daily',
-        time: '08:00 AM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Vitamin C',
-        grams: '1000mg',
-        capsules: '1',
-        daily: 'Daily',
-        time: '12:00 PM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Paracetamol',
-        grams: '500mg',
-        capsules: '2',
-        daily: 'Daily',
-        time: '08:00 AM',
-      },
-      {
-        image: require('../../assets/images/icon.png'),
-        name: 'Vitamin C',
-        grams: '1000mg',
-        capsules: '1',
-        daily: 'Daily',
-        time: '12:00 PM',
+        status: STATUS.UPCOMING
       },
     ],  
 };
@@ -171,7 +124,7 @@ export default function Index() {
   const [selectedMedication, setSelectedMedication] = useState(null);
   const [showMedModal, setShowMedModal] = useState(false);
   const scrollY = useRef(new Animated.Value(0)).current;
-const flatListRef = useRef<FlatList<any>>(null);
+  const flatListRef = useRef<FlatList<any>>(null);
 
   const initialIndex = useMemo(() => {
     return weeks.findIndex((week) =>
@@ -184,16 +137,16 @@ const flatListRef = useRef<FlatList<any>>(null);
     setSelectedDate(today);
     
     const weekIndex = weeks.findIndex(week =>
-    week.some(day => 
-  day.getFullYear() === today.getFullYear() &&
-  day.getMonth() === today.getMonth() &&
-  day.getDate() === today.getDate()
-)
-
-  );
-  if (weekIndex !== -1 && flatListRef.current) {
-    flatListRef.current.scrollToIndex({ index: weekIndex, animated: true });
-  }
+      week.some(day => 
+        day.getFullYear() === today.getFullYear() &&
+        day.getMonth() === today.getMonth() &&
+        day.getDate() === today.getDate()
+      )
+    );
+    
+    if (weekIndex !== -1 && flatListRef.current) {
+      flatListRef.current.scrollToIndex({ index: weekIndex, animated: true });
+    }
 
     setTimeout(() => {
       setRefreshing(false);
@@ -227,6 +180,53 @@ const flatListRef = useRef<FlatList<any>>(null);
     outputRange: [0, -20],
     extrapolate: 'clamp',
   });
+
+  const getStatusStyles = (status) => {
+    switch(status) {
+      case STATUS.TAKEN:
+        return {
+          container: styles.statusTakenContainer,
+          text: styles.statusTakenText,
+          icon: 'check-circle',
+          iconColor: '#2F855A'
+        };
+      case STATUS.SKIPPED:
+        return {
+          container: styles.statusSkippedContainer,
+          text: styles.statusSkippedText,
+          icon: 'cancel',
+          iconColor: '#F9A825'
+        };
+      case STATUS.MISSED:
+        return {
+          container: styles.statusMissedContainer,
+          text: styles.statusMissedText,
+          icon: 'alert-circle',
+          iconColor: '#D32F2F'
+        };
+      case STATUS.LATE:
+        return {
+          container: styles.statusLateContainer,
+          text: styles.statusLateText,
+          icon: 'clock-alert',
+          iconColor: '#DD6B20'
+        };
+      case STATUS.UPCOMING:
+        return {
+          container: styles.statusUpcomingContainer,
+          text: styles.statusUpcomingText,
+          icon: 'clock-outline',
+          iconColor: '#718096'
+        };
+      default:
+        return {
+          container: styles.statusUpcomingContainer,
+          text: styles.statusUpcomingText,
+          icon: 'clock-outline',
+          iconColor: '#718096'
+        };
+    }
+  };
 
   const renderHeader = () => (
     <Animated.View style={[styles.headerContainer, { height: headerHeight }]}>
@@ -268,7 +268,7 @@ const flatListRef = useRef<FlatList<any>>(null);
           { opacity: dateOpacity, transform: [{ translateY: dateTranslateY }] }
         ]}>
           <FlatList
-          ref={flatListRef}
+            ref={flatListRef}
             data={weeks}
             keyExtractor={(_, index) => `week-${index}`}
             horizontal
@@ -316,29 +316,40 @@ const flatListRef = useRef<FlatList<any>>(null);
     </Animated.View>
   );
 
-  const renderMedItem = ({ item }: { item: typeof medications[0] }) => (
-    <TouchableOpacity onPress={() => {
-      setSelectedMedication(item);
-      setShowMedModal(true);
-    }}>
-      <View style={styles.medRow}>
-        <View style={styles.medIconContainer}>
-          <Image source={item.image} style={styles.pillImage} />
-        </View>
-        <View style={styles.medDetails}>
-          <Text style={styles.medName}>{item.name}</Text>
-          <Text style={styles.medGrams}>{item.grams}</Text>
-          <View style={styles.medInfoContainer}>
-            <Text style={styles.medInfo}>{item.capsules} Capsules</Text>
-            <Text style={styles.medInfo}> • {item.daily}</Text>
+  const renderMedItem = ({ item }: { item: typeof medications[0] }) => {
+    const statusStyles = getStatusStyles(item.status);
+    return (
+      <TouchableOpacity onPress={() => {
+        setSelectedMedication(item);
+        setShowMedModal(true);
+      }}>
+        <View style={styles.medRow}>
+          <View style={styles.medIconContainer}>
+            <Image source={item.image} style={styles.pillImage} />
+          </View>
+          <View style={styles.medDetails}>
+            <Text style={styles.medName}>{item.name}</Text>
+            <Text style={styles.medGrams}>{item.grams}</Text>
+            <View style={styles.medInfoContainer}>
+              <Text style={styles.medInfo}>{item.capsules} Capsules</Text>
+              <Text style={styles.medInfo}> • {item.daily}</Text>
+            </View>
+          </View>
+          <View style={[styles.statusContainer, statusStyles.container]}>
+            <MaterialCommunityIcons 
+              name={statusStyles.icon} 
+              size={16} 
+              color={statusStyles.iconColor} 
+            />
+            <Text style={[styles.statusText, statusStyles.text]}>
+              {item.status === STATUS.LATE ? `Late (${item.takenTime})` : 
+               item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+            </Text>
           </View>
         </View>
-        <View style={styles.timeContainer}>
-          <Text style={styles.timeText}>{item.time}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
 
   const renderModals = () => (
     <>
@@ -422,27 +433,20 @@ const flatListRef = useRef<FlatList<any>>(null);
                   <Text style={styles.medModalDose}>{selectedMedication.grams} • {selectedMedication.capsules} Capsules</Text>
                   <Text style={styles.medModalSchedule}>{selectedMedication.daily} at {selectedMedication.time}</Text>
                   
-                  <View style={styles.medModalButtons}>
-                    <TouchableOpacity 
-                      style={[styles.medModalButton, styles.skipButton]}
-                      onPress={() => {
-                        console.log('Skipped:', selectedMedication.name);
-                        setShowMedModal(false);
-                      }}
-                    >
-                      <Text style={styles.skipButtonText}>Skip</Text>
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity 
-                      style={[styles.medModalButton, styles.takeButton]}
-                      onPress={() => {
-                        console.log('Taken:', selectedMedication.name);
-                        setShowMedModal(false);
-                      }}
-                    >
-                      <Text style={styles.takeButtonText}>Take</Text>
-                      <MaterialCommunityIcons name="check" size={20} color="#FFF" />
-                    </TouchableOpacity>
+                  <View style={styles.statusDetailContainer}>
+                    <MaterialCommunityIcons 
+                      name={getStatusStyles(selectedMedication.status).icon} 
+                      size={24} 
+                      color={getStatusStyles(selectedMedication.status).iconColor} 
+                    />
+                    <Text style={[styles.statusDetailText, getStatusStyles(selectedMedication.status).text]}>
+                      {selectedMedication.status === STATUS.LATE && selectedMedication.takenTime
+                        ? `Taken Late at ${selectedMedication.takenTime}`
+                        : typeof selectedMedication.status === 'string'
+                          ? selectedMedication.status.charAt(0).toUpperCase() + selectedMedication.status.slice(1)
+                          : 'Unknown'}
+                    </Text>
+
                   </View>
                 </View>
               </>
@@ -650,17 +654,48 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#64748B',
   },
-  timeContainer: {
-    backgroundColor: '#BBE2EC',
-    borderRadius: 20,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    alignSelf: 'flex-start',
+  statusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    marginLeft: 8,
   },
-  timeText: {
-    color: '#3D4B6B',
-    fontWeight: 500,
+  statusText: {
     fontSize: 12,
+    fontWeight: '600',
+    marginLeft: 4,
+  },
+  statusTakenContainer: {
+    backgroundColor: '#E0F7E9',
+  },
+  statusTakenText: {
+    color: '#2F855A',
+  },
+  statusSkippedContainer: {
+    backgroundColor: '#FFF9E6',
+  },
+  statusSkippedText: {
+    color: '#F9A825',
+  },
+  statusMissedContainer: {
+    backgroundColor: '#FFE6E6',
+  },
+  statusMissedText: {
+    color: '#D32F2F',
+  },
+  statusLateContainer: {
+    backgroundColor: '#FEEBC8',
+  },
+  statusLateText: {
+    color: '#DD6B20',
+  },
+  statusUpcomingContainer: {
+    backgroundColor: '#EDF2F7',
+  },
+  statusUpcomingText: {
+    color: '#718096',
   },
   noMedContainer: {
     marginTop: 40,
@@ -811,40 +846,21 @@ const styles = StyleSheet.create({
   medModalSchedule: {
     fontSize: 16,
     color: '#4682B4',
-    marginBottom: 30,
+    marginBottom: 16,
     fontWeight: '500',
   },
-  medModalButtons: {
+  statusDetailContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginTop: 20,
-  },
-  medModalButton: {
-    flex: 1,
-    paddingVertical: 15,
-    borderRadius: 12,
-    justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
+    marginTop: 16,
+    padding: 12,
+    borderRadius: 12,
+    width: '100%',
+    justifyContent: 'center',
   },
-  skipButton: {
-    backgroundColor: '#F1F5F9',
-    marginRight: 10,
-  },
-  takeButton: {
-    backgroundColor: '#4682B4',
-    marginLeft: 10,
-  },
-  skipButtonText: {
-    color: '#64748B',
-    fontWeight: '600',
+  statusDetailText: {
     fontSize: 16,
-  },
-  takeButtonText: {
-    color: '#FFF',
     fontWeight: '600',
-    fontSize: 16,
-    marginRight: 8,
+    marginLeft: 8,
   },
 });
