@@ -27,7 +27,7 @@ const CaregiverProfileScreen = () => {
           <Text style={styles.caregiverInfo}>Assigned since: May 2025</Text>
         </View>
         
-        <Link href="/editprofile" asChild>
+        <Link href="/ceditprofile" asChild>
           <TouchableOpacity style={styles.editButton}>
             <Ionicons name="pencil-outline" size={18} color={COLORS.blue2} />
             <Text style={styles.editButtonText}>Edit Profile</Text>
@@ -41,13 +41,13 @@ const CaregiverProfileScreen = () => {
           title="Patient Information and Records" 
           icon="people-outline" 
           color={COLORS.blue2}
-          onPress={() => router.push('/healthrecords')}
+          onPress={() => router.push('/chealthrecords')}
         />
         <MenuItem 
           title="Appointments" 
           icon="calendar-outline" 
           color={COLORS.blue2}
-          onPress={() => router.push('/appointments')}
+          onPress={() => router.push('/cappointments')}
         />
 
         {/* Settings Section */}
@@ -77,9 +77,9 @@ const CaregiverProfileScreen = () => {
 
       {/* Footer Links */}
       <View style={styles.footerLinks}>
-        <Link href="/privacy" style={styles.footerLink}>Privacy Policy</Link>
+        {/* <Link href="/privacy" style={styles.footerLink}>Privacy Policy</Link>
         <Text style={styles.footerDivider}>•</Text>
-        <Link href="/terms" style={styles.footerLink}>Terms of Service</Link>
+        <Link href="/terms" style={styles.footerLink}>Terms of Service</Link> */}
       </View>
     </ScrollView>
   );
