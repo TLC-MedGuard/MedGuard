@@ -37,12 +37,7 @@ const CaregiverProfileScreen = () => {
 
       {/* Menu Options */}
       <View style={styles.menuSection}>
-        <MenuItem 
-          title="Patient Information and Records" 
-          icon="people-outline" 
-          color={COLORS.blue2}
-          onPress={() => router.push('/chealthrecords')}
-        />
+
         <MenuItem 
           title="Appointments" 
           icon="calendar-outline" 
