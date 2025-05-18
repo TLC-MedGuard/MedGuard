@@ -13,15 +13,21 @@ const EditProfileScreen = () => {
     phone: '9123456789',
     address: '123 Rizal Avenue, Manila',
     bloodType: 'O+',
-    profileImage: require('../assets/images/default-user.jpg')
+    profileImage: require('../assets/images/default-user.jpg'),
   });
 
   const [errors, setErrors] = useState({
     name: '',
     email: '',
     phone: '',
-    emergencyContactName: '',
-    emergencyContactNumber: ''
+    address: '',
+  });
+
+  const [touched, setTouched] = useState({
+    name: false,
+    email: false,
+    phone: false,
+    address: false,
   });
 
   const pickImage = async () => {
@@ -37,30 +43,84 @@ const EditProfileScreen = () => {
     }
   };
 
+  const validateField = (fieldName, value) => {
+    let error = '';
+    
+    switch (fieldName) {
+      case 'name':
+        if (!value.trim()) error = 'Full name is required';
+        else if (value.length < 3) error = 'Name must be at least 3 characters';
+        else if (!/^[a-zA-Z ]+$/.test(value)) error = 'Name can only contain letters and spaces';
+        break;
+      case 'email':
+        if (!value) error = 'Email is required';
+        else if (!/\S+@\S+\.\S+/.test(value)) error = 'Invalid email format';
+        break;
+      case 'phone':
+        if (!value) error = 'Phone number is required';
+        else if (value.length !== 10) error = 'Phone number must be 10 digits';
+        else if (!/^[0-9]+$/.test(value)) error = 'Phone number can only contain digits';
+        break;
+      case 'address':
+        if (!value.trim()) error = 'Address is required';
+        else if (value.length < 10) error = 'Address must be at least 10 characters';
+        break;
+      default:
+        break;
+    }
+    
+    return error;
+  };
+
+  const handleBlur = (fieldName) => {
+    setTouched({...touched, [fieldName]: true});
+    const error = validateField(fieldName, profile[fieldName]);
+    setErrors({...errors, [fieldName]: error});
+  };
+
+  const handleChange = (fieldName, value) => {
+    // For phone numbers, automatically format and limit input
+    if (fieldName === 'phone') {
+      // Remove all non-digit characters
+      value = value.replace(/[^0-9]/g, '');
+      // Limit to 10 characters
+      value = value.slice(0, 10);
+    }
+    
+    setProfile({...profile, [fieldName]: value});
+    
+    // Validate in real-time if the field has been touched
+    if (touched[fieldName]) {
+      const error = validateField(fieldName, value);
+      setErrors({...errors, [fieldName]: error});
+    }
+  };
+
   const handleSave = () => {
-    // Basic validation
-    const newErrors = {
-      name: !profile.name ? 'Full name is required' : '',
-      email: !profile.email ? 'Email is required' : !/\S+@\S+\.\S+/.test(profile.email) ? 'Invalid email format' : '',
-      phone: !profile.phone 
-  ? 'Phone number is required' 
-  : profile.phone.length !== 10 
-    ? 'Phone number must be 10 digits' 
-    : '',
-
-emergencyContactNumber: !profile.emergencyContactNumber 
-  ? 'Emergency contact number is required' 
-  : profile.emergencyContactNumber.length !== 10 
-    ? 'Emergency contact number must be 10 digits' 
-    : '',
-
-      emergencyContactName: !profile.emergencyContactName ? 'Emergency contact name is required' : '',
+    // Mark all fields as touched to show all errors
+    const newTouched = {
+      name: true,
+      email: true,
+      phone: true,
+      address: true,
     };
-
+    setTouched(newTouched);
+    
+    // Validate all fields
+    const newErrors = {
+      name: validateField('name', profile.name),
+      email: validateField('email', profile.email),
+      phone: validateField('phone', profile.phone),
+      address: validateField('address', profile.address),
+      };
     setErrors(newErrors);
-
-    if (!Object.values(newErrors).some(error => error !== '')) {
+    
+    // Check if there are any errors
+    const isValid = !Object.values(newErrors).some(error => error !== '');
+    
+    if (isValid) {
       // Save logic would go here
+      console.log('Profile saved:', profile);
       navigation.goBack();
     }
   };
@@ -95,7 +155,8 @@ emergencyContactNumber: !profile.emergencyContactNumber
             <TextInput
               style={[styles.input, errors.name && styles.inputError]}
               value={profile.name}
-              onChangeText={(text) => setProfile({...profile, name: text})}
+              onChangeText={(text) => handleChange('name', text)}
+              onBlur={() => handleBlur('name')}
               placeholder="Enter your full name"
             />
             {errors.name ? <Text style={styles.errorText}>{errors.name}</Text> : null}
@@ -106,44 +167,56 @@ emergencyContactNumber: !profile.emergencyContactNumber
             <TextInput
               style={[styles.input, errors.email && styles.inputError]}
               value={profile.email}
-              onChangeText={(text) => setProfile({...profile, email: text})}
+              onChangeText={(text) => handleChange('email', text)}
+              onBlur={() => handleBlur('email')}
               placeholder="Enter your email"
               keyboardType="email-address"
+              autoCapitalize="none"
             />
             {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
           </View>
 
-          <View style={styles.inputRow}>
-  <Text style={styles.phonePrefix}>+63</Text>
-  <TextInput
-    style={[styles.input, { flex: 1 }, errors.phone && styles.inputError]}
-    value={profile.phone}
-    onChangeText={(text) => {
-      const numeric = text.replace(/[^0-9]/g, '').slice(0, 10);
-      setProfile({ ...profile, phone: numeric });
-    }}
-    placeholder="9123456789"
-    keyboardType="numeric"
-    maxLength={10}
-  />
-</View>
-{errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
-
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>Phone Number</Text>
+            <View style={styles.inputRow}>
+              <Text style={styles.phonePrefix}>+63</Text>
+              <TextInput
+                style={[styles.input, { flex: 1 }, errors.phone && styles.inputError]}
+                value={profile.phone}
+                onChangeText={(text) => handleChange('phone', text)}
+                onBlur={() => handleBlur('phone')}
+                placeholder="9123456789"
+                keyboardType="phone-pad"
+                maxLength={10}
+              />
+            </View>
+            {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
+          </View>
 
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Address</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, errors.address && styles.inputError]}
               value={profile.address}
-              onChangeText={(text) => setProfile({...profile, address: text})}
-              placeholder="Enter your address"
+              onChangeText={(text) => handleChange('address', text)}
+              onBlur={() => handleBlur('address')}
+              placeholder="Enter your complete address"
             />
+            {errors.address ? <Text style={styles.errorText}>{errors.address}</Text> : null}
           </View>
+
 
         </View>
 
         {/* Save Button */}
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+        <TouchableOpacity 
+          style={[
+            styles.saveButton, 
+            Object.values(errors).some(error => error) && styles.saveButtonDisabled
+          ]} 
+          onPress={handleSave}
+          disabled={Object.values(errors).some(error => error)}
+        >
           <Text style={styles.saveButtonText}>Save Changes</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -296,7 +369,9 @@ phonePrefix: {
   backgroundColor: '#f1f5f9',
   color: '#000',
 },
-
+  saveButtonDisabled: {
+    backgroundColor: '#cccccc',
+  },
 });
 
 export default EditProfileScreen;

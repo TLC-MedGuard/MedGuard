@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants/theme';
 import { useNavigation } from 'expo-router';
 
-const CaregiverAppointmentsScreen = () => {
+const CaregiverPatientAppointmentsScreen = () => {
   const navigation = useNavigation();
   const [appointments] = useState([
     {
@@ -12,6 +12,7 @@ const CaregiverAppointmentsScreen = () => {
       type: 'upcoming',
       patient: {
         name: 'Maria Santos',
+        age: '72',
       },
       doctor: {
         name: 'Dr. Juan Dela Cruz',
@@ -27,19 +28,19 @@ const CaregiverAppointmentsScreen = () => {
       id: '2',
       type: 'upcoming',
       patient: {
-        name: 'Jose Reyes',
-        age: '68',
-        condition: 'Arthritis',
+        name: 'Maria Santos',
+        age: '72',
+        condition: 'Hypertension, Diabetes',
       },
       doctor: {
         name: 'Dr. Sofia Reyes',
-        specialty: 'Rheumatologist',
+        specialty: 'Dermatologist',
       },
       date: '2023-05-25',
       time: '10:00',
       formattedDate: 'May 25, 10:00 AM',
       location: 'Asian Hospital, Alabang',
-      purpose: 'Arthritis treatment evaluation'
+      purpose: 'Annual skin check'
     },
     {
       id: '3',
@@ -77,7 +78,17 @@ const CaregiverAppointmentsScreen = () => {
             <Ionicons name="arrow-back" size={24} color={COLORS.dblue} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>MEDGUARD</Text>
-          <Text style={styles.headerSubtitle}>Patient Appointments</Text>
+          <Text style={styles.headerSubtitle}>Juan's Appointments</Text>
+        </View>
+
+        {/* Patient Info */}
+        <View style={styles.patientInfoCard}>
+
+          <View style={styles.patientDetails}>
+            <Text style={styles.patientName}>Juan Dela Cruz</Text>
+            <Text style={styles.patientInfo}>35 years</Text>
+            <Text style={styles.caregiverNote}>Under your care since May 2025</Text>
+          </View>
         </View>
 
         {/* Upcoming Appointments */}
@@ -176,27 +187,18 @@ const CaregiverAppointmentCard = ({ appointment, onDirections }) => {
   
   return (
     <View style={[styles.card, isUpcoming && styles.upcomingCard]}>
-      {/* Patient Info */}
-      <View style={styles.patientHeader}>
+      {/* Doctor Info */}
+      <View style={styles.doctorHeader}>
 
-        <View style={styles.patientInfo}>
-          <Text style={styles.patientName}>{appointment.patient.name}</Text>
-          <Text style={styles.patientDetails}>
-            {appointment.patient.age} years • {appointment.patient.condition}
-          </Text>
+
+        <View style={styles.doctorInfo}>
+          <Text style={styles.doctorName}>{appointment.doctor.name}</Text>
+          <Text style={styles.doctorSpecialty}>{appointment.doctor.specialty}</Text>
         </View>
       </View>
 
       {/* Appointment Details */}
       <View style={styles.cardBody}>
-        <View style={styles.detailRow}>
-          <Ionicons name="person-outline" size={18} color={COLORS.blue2} />
-          <Text style={styles.detailText}>
-            <Text style={styles.detailLabel}>Doctor: </Text>
-            {appointment.doctor.name} ({appointment.doctor.specialty})
-          </Text>
-        </View>
-        
         <View style={styles.detailRow}>
           <Ionicons name="calendar-outline" size={18} color={COLORS.blue2} />
           <Text style={styles.detailText}>
@@ -266,6 +268,39 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: COLORS.blue2,
   },
+  patientInfoCard: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 1,
+  },
+  
+  patientDetails: {
+    flex: 1,
+  },
+  patientName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#1E293B',
+    marginBottom: 4,
+  },
+  patientInfo: {
+    fontSize: 14,
+    color: '#64748B',
+    marginBottom: 4,
+  },
+  caregiverNote: {
+    fontSize: 13,
+    color: COLORS.blue2,
+    fontStyle: 'italic',
+  },
   sectionContainer: {
     marginBottom: 24,
   },
@@ -287,26 +322,21 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: COLORS.blue2,
   },
-  patientHeader: {
+  doctorHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 12,
   },
-  patientImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 12,
-  },
-  patientInfo: {
+  
+  doctorInfo: {
     flex: 1,
   },
-  patientName: {
+  doctorName: {
     fontSize: 16,
     fontWeight: '600',
     color: '#1E293B',
   },
-  patientDetails: {
+  doctorSpecialty: {
     fontSize: 14,
     color: '#64748B',
   },
@@ -441,4 +471,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CaregiverAppointmentsScreen;
+export default CaregiverPatientAppointmentsScreen;

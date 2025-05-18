@@ -3,18 +3,19 @@ import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants/theme';
 import { useNavigation } from 'expo-router';
+
+import defaultUserPic from '../assets/images/default-user.jpg';
+
 const HealthRecordsScreen = () => {
   const navigation = useNavigation();
 
 const patientInfo = {
-  name: "John Doe",
-  username: "johndoe123",
-  email: "johndoe@example.com",
-  address: "123 Main St, Anytown, USA",
+  name: "Juan Dela Cruz",
+  username: "Juan",
+  email: "juan.delacruz@gmail.com",
+  address: "ADDRESS",
   phoneNumber: "(123) 456-7890",
-  profilePicture: require('./assets/images/default-user.jpg')
-
-
+  profilePicture: defaultUserPic,
 };
 
 
@@ -81,7 +82,7 @@ const patientInfo = {
 
         {/* Patient Info */}
         <View style={styles.patientInfoContainer}>
-          <Image source={patientInfo.profilePicture} style={styles.profilePicture} />
+        <Image source={patientInfo.profilePicture} style={styles.profilePicture} />
           <Text style={styles.patientName}>{patientInfo.name}</Text>
           <Text style={styles.patientDetail}>Username: {patientInfo.username}</Text>
           <Text style={styles.patientDetail}>Email: {patientInfo.email}</Text>
