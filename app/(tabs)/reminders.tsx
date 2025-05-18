@@ -1051,11 +1051,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8FAFC',
     paddingHorizontal: 24,
-<<<<<<< HEAD
     marginBottom: 50,
-=======
-    marginBottom: 50
->>>>>>> 20af75e69b457eb18a85093dbe1452877575143f
   },
   header: {
     marginTop: 25,
