@@ -8,13 +8,11 @@ import * as ImagePicker from 'expo-image-picker';
 const EditProfileScreen = () => {
   const navigation = useNavigation();
   const [profile, setProfile] = useState({
-    name: 'Juan Dela Cruz',
-    email: 'juan.delacruz@google.com',
+    name: 'Maria Garcia',
+    email: 'mariagarcia@google.com',
     phone: '9123456789',
     address: '123 Rizal Avenue, Manila',
     bloodType: 'O+',
-    emergencyContactName: 'Maria Dela Cruz',
-    emergencyContactNumber: '9176543210',
     profileImage: require('../assets/images/default-user.jpg')
   });
 
@@ -141,37 +139,6 @@ emergencyContactNumber: !profile.emergencyContactNumber
               placeholder="Enter your address"
             />
           </View>
-
-<View style={styles.inputContainer}>
-  <Text style={styles.inputLabel}>Emergency Contact</Text>
-  <TextInput
-    style={[styles.input, errors.emergencyContactName && styles.inputError]}
-    value={profile.emergencyContactName}
-    onChangeText={(text) =>
-      setProfile({ ...profile, emergencyContactName: text })
-    }
-    placeholder="Enter emergency contact name"
-  />
-  {errors.emergencyContactName ? (
-    <Text style={styles.errorText}>{errors.emergencyContactName}</Text>
-  ) : null}
-</View>
-
-<View style={styles.inputRow}>
-  <Text style={styles.phonePrefix}>+63</Text>
-  <TextInput
-    style={[styles.input, { flex: 1 }, errors.emergencyContactNumber && styles.inputError]}
-    value={profile.emergencyContactNumber}
-    onChangeText={(text) => {
-      const numeric = text.replace(/[^0-9]/g, '').slice(0, 10);
-      setProfile({ ...profile, emergencyContactNumber: numeric });
-    }}
-    placeholder="9176543210"
-    keyboardType="numeric"
-    maxLength={10}
-  />
-</View>
-{errors.emergencyContactNumber ? <Text style={styles.errorText}>{errors.emergencyContactNumber}</Text> : null}
 
         </View>
 
