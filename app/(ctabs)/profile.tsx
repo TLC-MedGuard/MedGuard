@@ -2,41 +2,42 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants/theme';
-import { Link, router, useRouter } from 'expo-router';
-import { useNavigation } from '@react-navigation/native';
+import { Link, router } from 'expo-router';
 
-
-const ProfileScreen = () => {
-  const navigation = useNavigation();
+const CaregiverProfileScreen = () => {
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>MEDGUARD</Text>
-        <Text style={styles.headerSubtitle}>Profile</Text>
+        <Text style={styles.headerSubtitle}>Caregiver Profile</Text>
       </View>
 
       {/* Profile Card */}
       <View style={styles.profileCard}>
+        <Text style={styles.caregiverTitle}>Caregiver</Text>
         <Image 
           style={styles.profilePicture} 
           source={require('./../../assets/images/default-user.jpg')} 
         />
 
         <View style={styles.userInfo}>
-          <Text style={styles.username}>Juan</Text>
-          <Text style={styles.email}>juan.delacruz@gmail.com</Text>
+          <Text style={styles.username}>Maria Garcia</Text>
+          <Text style={styles.email}>mariagarcia@google.com</Text>
+          <Text style={styles.caregiverInfo}>Assigned since: May 2025</Text>
         </View>
-        <Link href="/editprofile" asChild>
-  <TouchableOpacity style={styles.editButton}>
-    <Ionicons name="pencil-outline" size={18} color={COLORS.blue2} />
-    <Text style={styles.editButtonText}>Edit Profile</Text>
-  </TouchableOpacity>
-</Link>
+        
+        <Link href="/ceditprofile" asChild>
+          <TouchableOpacity style={styles.editButton}>
+            <Ionicons name="pencil-outline" size={18} color={COLORS.blue2} />
+            <Text style={styles.editButtonText}>Edit Profile</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
 
       {/* Menu Options */}
       <View style={styles.menuSection}>
+
         <MenuItem 
             title="Appointments" 
             icon="calendar-outline" 
@@ -44,23 +45,16 @@ const ProfileScreen = () => {
             onPress={() => router.push('/appointments')}
           />
 
-        <MenuItem 
-          title="Care Team" 
-          icon="people-outline" 
-          color={COLORS.blue2}
-          onPress={() => router.push('/caregivers')}
-        />
-
         {/* Settings Section */}
         <Text style={styles.sectionHeader}>Settings</Text>
         <MenuItem 
-          title="App Settings" 
+          title="Caregiver Settings" 
           icon="settings-outline"
           color="#64748B"
         />
         <MenuItem 
-          title="Account Settings" 
-          icon="person-outline"
+          title="Notification Preferences" 
+          icon="notifications-outline"
           color="#64748B"
         />
         <MenuItem 
@@ -78,9 +72,9 @@ const ProfileScreen = () => {
 
       {/* Footer Links */}
       <View style={styles.footerLinks}>
-        <Link href="/privacy" style={styles.footerLink}>Privacy Policy</Link>
+        {/* <Link href="/privacy" style={styles.footerLink}>Privacy Policy</Link>
         <Text style={styles.footerDivider}>•</Text>
-        <Link href="/terms" style={styles.footerLink}>Terms of Service</Link>
+        <Link href="/terms" style={styles.footerLink}>Terms of Service</Link> */}
       </View>
     </ScrollView>
   );
@@ -101,7 +95,6 @@ const MenuItem = ({ title, icon, color = COLORS.blue2, onPress }: MenuItemProps 
     <Ionicons name="chevron-forward" size={20} color="#94A3B8" />
   </TouchableOpacity>
 );
-
 
 const styles = StyleSheet.create({
   container: {
@@ -136,6 +129,16 @@ const styles = StyleSheet.create({
     elevation: 3,
     alignItems: 'center',
   },
+  caregiverTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: COLORS.blue2,
+    backgroundColor: '#EFF6FF',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 12,
+    marginBottom: 12,
+  },
   profilePicture: {
     width: 100,
     height: 100,
@@ -153,10 +156,18 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#1E293B',
     marginBottom: 4,
+    textAlign: 'center',
   },
   email: {
     fontSize: 14,
     color: '#64748B',
+    marginBottom: 8,
+  },
+  caregiverInfo: {
+    fontSize: 13,
+    color: '#64748B',
+    marginBottom: 4,
+    textAlign: 'center',
   },
   editButton: {
     flexDirection: 'row',
@@ -226,4 +237,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default CaregiverProfileScreen;

@@ -51,10 +51,9 @@ export default function TabLayout() {
         <Tabs.Screen 
             name="reminders"  
             options={{
-                tabBarIcon: ({ size, color }) => (
+tabBarIcon: ({ size, color }) => (
   <MaterialCommunityIcons name="heart-outline" size={size} color={color} />
 )
-
             }}
         />
         <Tabs.Screen 
